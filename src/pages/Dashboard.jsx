@@ -142,8 +142,49 @@ const chartData = {
         totalExpense,
         totalBudget - totalExpense,
       ],
+
+      backgroundColor: [
+        "#22c55e",
+        "#ef4444",
+        "#3b82f6",
+      ],
+
+      borderColor: [
+        "#16a34a",
+        "#dc2626",
+        "#2563eb",
+      ],
+
+      borderWidth: 2,
+      borderRadius: 10,
     },
   ],
+};
+
+const chartOptions = {
+  responsive: true,
+
+  plugins: {
+    legend: {
+      labels: {
+        color: "white",
+      },
+    },
+  },
+
+  scales: {
+    x: {
+      ticks: {
+        color: "white",
+      },
+    },
+
+    y: {
+      ticks: {
+        color: "white",
+      },
+    },
+  },
 };
 
   return (
@@ -330,7 +371,10 @@ const chartData = {
     📊 Budget Analytics
   </h2>
 
-  <Bar data={chartData} />
+  <Bar
+  data={chartData}
+  options={chartOptions}
+/>
    
 <div className="card">
   <h2>💵 Remaining</h2>
