@@ -191,7 +191,12 @@ const chartOptions = {
     <div className="dashboard-container">
       {/* Sidebar */}
       <div className="sidebar">
-        <h2>🏠 BuildMyHome</h2>
+       <h2>
+  BUILD MY
+  <span style={{ color: "#fbbf24" }}>
+    {" "}HOME
+  </span>
+</h2>
 
         <ul>
           <li>📊 Dashboard</li>
@@ -303,9 +308,24 @@ const chartOptions = {
       {/* Main Content */}
       <div className="main-content">
         <div className="header">
-          <h1>Dashboard</h1>
-         <p>Welcome Back, {userName} 👋</p>
-        </div>
+  <h1>🏗️ PROJECT COMMAND CENTER</h1>
+
+  <p>
+    Welcome Back, {userName} 👋
+  </p>
+
+  <p
+    style={{
+      marginTop: "10px",
+      color: "#fbbf24",
+      fontSize: "14px",
+      letterSpacing: "2px",
+      textTransform: "uppercase",
+    }}
+  >
+    Construction Management Platform
+  </p>
+</div>
 
         <div className="cards">
           <div className="card">
@@ -357,28 +377,23 @@ const chartOptions = {
   <p>₹{totalBudget - totalExpense}</p>
 </div>
 
+
+
 </div>
 
-<div
-  style={{
-    background: "#1e293b",
-    padding: "25px",
-    borderRadius: "18px",
-    marginTop: "30px",
-  }}
->
+<div className="analytics-section">
+
   <h2 style={{ marginBottom: "20px" }}>
     📊 Budget Analytics
   </h2>
-
+<div style={{ height: "250px" }}>
   <Bar
-  data={chartData}
-  options={chartOptions}
-/>
-   
-<div className="card">
-  <h2>💵 Remaining</h2>
-  <p>₹{totalBudget - totalExpense}</p>
+    data={chartData}
+    options={{
+      ...chartOptions,
+      maintainAspectRatio: false,
+    }}
+  />
 </div>
 </div>
 </div>
