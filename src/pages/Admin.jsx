@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./admin.css";
 
 function Admin() {
   const [projectCount, setProjectCount] = useState(0);
@@ -55,52 +56,80 @@ function Admin() {
     minWidth: "220px",
   };
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
+ return (
+  <div className="admin-page">
+
+    <div className="admin-header">
       <h1>⚙️ Admin Dashboard</h1>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          flexWrap: "wrap",
-          marginTop: "30px",
-        }}
-      >
-        <div style={cardStyle}>
-          <h2>📁 Projects</h2>
-          <h1>{projectCount}</h1>
-        </div>
-
-        <div style={cardStyle}>
-          <h2>🧱 Materials</h2>
-          <h1>{materialCount}</h1>
-        </div>
-
-        <div style={cardStyle}>
-          <h2>👷 Providers</h2>
-          <h1>{providerCount}</h1>
-        </div>
-
-        <div style={cardStyle}>
-          <h2>⭐ Reviews</h2>
-          <h1>{reviewCount}</h1>
-        </div>
-
-        <div style={cardStyle}>
-          <h2>📸 Images</h2>
-          <h1>{imageCount}</h1>
-        </div>
-      </div>
+      <p>
+        Monitor &
+        <span> Manage BuildMyHome Platform</span>
+      </p>
     </div>
-  );
+
+    <div className="admin-grid">
+
+      <div className="admin-card">
+        <h3>📁 Projects</h3>
+        <h2>{projectCount}</h2>
+      </div>
+
+      <div className="admin-card">
+        <h3>🧱 Materials</h3>
+        <h2>{materialCount}</h2>
+      </div>
+
+      <div className="admin-card">
+        <h3>👷 Providers</h3>
+        <h2>{providerCount}</h2>
+      </div>
+
+      <div className="admin-card">
+        <h3>⭐ Reviews</h3>
+        <h2>{reviewCount}</h2>
+      </div>
+
+      <div className="admin-card">
+        <h3>📸 Images</h3>
+        <h2>{imageCount}</h2>
+      </div>
+
+    </div>
+
+    <div className="summary-card">
+
+      <h2>📊 Platform Summary</h2>
+
+      <div className="summary-grid">
+
+        <div className="summary-box">
+          <h4>Total Resources</h4>
+          <p>
+            {projectCount +
+              materialCount +
+              providerCount +
+              reviewCount +
+              imageCount}
+          </p>
+        </div>
+
+        <div className="summary-box">
+          <h4>Project Status</h4>
+          <p>Active</p>
+        </div>
+
+        <div className="summary-box">
+          <h4>System Health</h4>
+          <p>100%</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+);
 }
 
 export default Admin;

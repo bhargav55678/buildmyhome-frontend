@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Providers.css";
 
 function Providers() {
   const [name, setName] = useState("");
@@ -86,40 +87,37 @@ const [filterProfession, setFilterProfession] = useState("All");
     }
   };
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
+return (
+  <div className="providers-page">
+
+    {/* Header */}
+    <div className="providers-header">
       <h1>👷 Service Providers</h1>
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "700px",
-          marginTop: "20px",
-        }}
-      >
-        <h2>Add Provider</h2>
+      <p>
+        Manage Skilled Professionals &
+        <span> Construction Teams</span>
+      </p>
+    </div>
+
+    {/* Add Provider */}
+
+    <div className="provider-form">
+
+      <h2>Add New Provider</h2>
+
+      <div className="form-grid">
 
         <input
           type="text"
           placeholder="Provider Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          style={inputStyle}
         />
 
         <select
           value={profession}
           onChange={(e) => setProfession(e.target.value)}
-          style={inputStyle}
         >
           <option>Contractor</option>
           <option>Electrician</option>
@@ -132,7 +130,6 @@ const [filterProfession, setFilterProfession] = useState("All");
           placeholder="Experience (Years)"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -140,7 +137,6 @@ const [filterProfession, setFilterProfession] = useState("All");
           placeholder="Phone Number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -148,108 +144,181 @@ const [filterProfession, setFilterProfession] = useState("All");
           placeholder="Location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          style={inputStyle}
         />
 
-        <button
-          onClick={addProvider}
-          style={buttonStyle}
-        >
-          Add Provider
-        </button>
       </div>
 
-      <div style={{ marginTop: "30px" }}>
+      <button
+        className="add-btn"
+        onClick={addProvider}
+      >
+        + Add Provider
+      </button>
 
-        <input
-  type="text"
-  placeholder="🔍 Search Provider..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  style={inputStyle}
-/>
-
-<select
-  value={filterProfession}
-  onChange={(e) => setFilterProfession(e.target.value)}
-  style={inputStyle}
->
-  <option value="All">All Professions</option>
-  <option value="Contractor">Contractor</option>
-  <option value="Electrician">Electrician</option>
-  <option value="Plumber">Plumber</option>
-  <option value="Painter">Painter</option>
-</select>
-        
-        
-        
-        <h2>📋 Providers List</h2>
-
-        {providers.length === 0 ? (
-          <div
-            style={{
-              background: "#1e293b",
-              padding: "20px",
-              borderRadius: "12px",
-              marginTop: "15px",
-            }}
-          >
-            No Providers Added
-          </div>
-        ) : (
-         providers
-  .filter((provider) => {
-    const matchesSearch = provider.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
-    const matchesProfession =
-      filterProfession === "All" ||
-      provider.profession === filterProfession;
-
-    return matchesSearch && matchesProfession;
-  })
-  .map((provider) => (
-            <div
-              key={provider._id}
-              style={{
-                background: "#1e293b",
-                padding: "20px",
-                borderRadius: "12px",
-                marginTop: "15px",
-              }}
-            >
-              <h3>{provider.name}</h3>
-
-              <p>👷 {provider.profession}</p>
-
-              <p>⭐ Experience: {provider.experience} Years</p>
-
-              <p>📞 {provider.phone}</p>
-
-              <p>📍 {provider.location}</p>
-
-              <button
-                onClick={() =>
-                  deleteProvider(provider._id)
-                }
-                style={{
-                  background: "#ef4444",
-                  color: "white",
-                  border: "none",
-                  padding: "10px 15px",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                }}
-              >
-                Delete Provider
-              </button>
-            </div>
-          ))
-        )}
-      </div>
     </div>
-  );
+
+    {/* Statistics */}
+
+    <div className="stats">
+
+      <div className="stat-card">
+        <h3>👷 Total Providers</h3>
+        <h2>{providers.length}</h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>🏗 Contractors</h3>
+        <h2>
+          {
+            providers.filter(
+              (p) => p.profession === "Contractor"
+            ).length
+          }
+        </h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>⚡ Skilled Workers</h3>
+        <h2>
+          {
+            providers.filter(
+              (p) => p.profession !== "Contractor"
+            ).length
+          }
+        </h2>
+      </div>
+
+    </div>
+
+    {/* Search */}
+
+    <div className="search-box">
+
+      <input
+        type="text"
+        placeholder="🔍 Search Provider..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+    </div>
+
+    <div
+      style={{
+        marginBottom: "25px",
+      }}
+    >
+
+      <select
+        value={filterProfession}
+        onChange={(e) =>
+          setFilterProfession(e.target.value)
+        }
+      >
+        <option value="All">
+          All Professions
+        </option>
+
+        <option value="Contractor">
+          Contractor
+        </option>
+
+        <option value="Electrician">
+          Electrician
+        </option>
+
+        <option value="Plumber">
+          Plumber
+        </option>
+
+        <option value="Painter">
+          Painter
+        </option>
+
+      </select>
+
+    </div>
+
+    <h2 style={{ marginBottom: "20px" }}>
+      📋 Providers List
+    </h2>
+
+    {providers.length === 0 ? (
+
+      <div className="provider-card">
+
+        No Providers Added
+
+      </div>
+
+    ) : (
+
+      providers
+
+        .filter((provider) => {
+
+          const matchesSearch =
+            provider.name
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+
+          const matchesProfession =
+            filterProfession === "All" ||
+            provider.profession ===
+              filterProfession;
+
+          return (
+            matchesSearch &&
+            matchesProfession
+          );
+        })
+
+        .map((provider) => (
+
+          <div
+            key={provider._id}
+            className="provider-card"
+          >
+
+            <h3>{provider.name}</h3>
+
+            <p>
+              👷 <strong>Profession:</strong>{" "}
+              {provider.profession}
+            </p>
+
+            <p>
+              ⭐ <strong>Experience:</strong>{" "}
+              {provider.experience} Years
+            </p>
+
+            <p>
+              📞 <strong>Phone:</strong>{" "}
+              {provider.phone}
+            </p>
+
+            <p>
+              📍 <strong>Location:</strong>{" "}
+              {provider.location}
+            </p>
+
+            <button
+              className="delete-btn"
+              onClick={() =>
+                deleteProvider(provider._id)
+              }
+            >
+              Delete Provider
+            </button>
+
+          </div>
+
+        ))
+
+    )}
+
+  </div>
+);
 }
 
 const inputStyle = {

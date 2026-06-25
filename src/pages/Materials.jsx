@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Materials.css";
 
 function Materials() {
   const [materialName, setMaterialName] = useState("");
@@ -89,34 +90,32 @@ function Materials() {
     0
   );
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
-      <h1>🧱 Materials Management</h1>
+return (
+  <div className="materials-page">
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "700px",
-          marginTop: "20px",
-        }}
-      >
-        <h2>Add Material</h2>
+    {/* Header */}
+    <div className="materials-header">
+      <h1>🧱 Material Management</h1>
+
+      <p>
+        Manage Construction Materials &
+        <span> Project Expenses</span>
+      </p>
+    </div>
+
+    {/* Form */}
+
+    <div className="material-form">
+
+      <h2>Add New Material</h2>
+
+      <div className="form-grid">
 
         <input
           type="text"
           placeholder="Material Name"
           value={materialName}
           onChange={(e) => setMaterialName(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -124,7 +123,6 @@ function Materials() {
           placeholder="Quantity"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -132,7 +130,6 @@ function Materials() {
           placeholder="Unit"
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -140,100 +137,127 @@ function Materials() {
           placeholder="Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          style={inputStyle}
         />
 
-        <button
-          onClick={addMaterial}
-          style={buttonStyle}
-        >
-          Add Material
-        </button>
       </div>
 
-      <div style={{ marginTop: "30px" }}>
-        <h2>💰 Total Material Expense: ₹{totalExpense}</h2>
-      </div>
+      <button
+        className="add-btn"
+        onClick={addMaterial}
+      >
+        + Add Material
+      </button>
 
-      <div style={{ marginTop: "30px" }}>
-        <input
-          type="text"
-          placeholder="🔍 Search Materials..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            marginBottom: "20px",
-          }}
-        />
-
-        <h2>📋 Materials List</h2>
-
-        {materials.length === 0 ? (
-          <div
-            style={{
-              background: "#1e293b",
-              padding: "20px",
-              borderRadius: "12px",
-              marginTop: "15px",
-            }}
-          >
-            No Materials Added
-          </div>
-        ) : (
-          materials
-            .filter((material) =>
-              material.materialName
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-            )
-            .map((material) => (
-              <div
-                key={material._id}
-                style={{
-                  background: "#1e293b",
-                  padding: "20px",
-                  borderRadius: "12px",
-                  marginTop: "15px",
-                }}
-              >
-                <h3>{material.materialName}</h3>
-
-                <p>📦 Quantity: {material.quantity}</p>
-
-                <p>📏 Unit: {material.unit}</p>
-
-                <p>💵 Price: ₹{material.price}</p>
-
-                <p>
-                  💰 Total Cost: ₹
-                  {material.quantity * material.price}
-                </p>
-
-                <button
-                  onClick={() =>
-                    deleteMaterial(material._id)
-                  }
-                  style={{
-                    background: "#ef4444",
-                    color: "white",
-                    border: "none",
-                    padding: "10px 15px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete Material
-                </button>
-              </div>
-            ))
-        )}
-      </div>
     </div>
-  );
+
+    {/* Statistics */}
+
+    <div className="stats">
+
+      <div className="stat-card">
+        <h3>📦 Total Materials</h3>
+        <h2>{materials.length}</h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>💰 Total Expense</h3>
+        <h2>₹{totalExpense.toLocaleString()}</h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>📈 Average Price</h3>
+
+        <h2>
+          ₹
+          {materials.length
+            ? Math.round(totalExpense / materials.length).toLocaleString()
+            : 0}
+        </h2>
+
+      </div>
+
+    </div>
+
+    {/* Search */}
+
+    <div className="search-box">
+
+      <input
+        type="text"
+        placeholder="🔍 Search Materials..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+    </div>
+
+    <h2 style={{ marginBottom: "20px" }}>
+      📋 Materials List
+    </h2>
+
+    {materials.length === 0 ? (
+
+      <div className="material-card">
+        No Materials Added
+      </div>
+
+    ) : (
+
+      materials
+        .filter((material) =>
+          material.materialName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        )
+        .map((material) => (
+
+          <div
+            key={material._id}
+            className="material-card"
+          >
+
+            <h3>{material.materialName}</h3>
+
+            <p>
+              📦 <strong>Quantity:</strong>{" "}
+              {material.quantity}
+            </p>
+
+            <p>
+              📏 <strong>Unit:</strong>{" "}
+              {material.unit}
+            </p>
+
+            <p>
+              💵 <strong>Price:</strong> ₹
+              {Number(material.price).toLocaleString()}
+            </p>
+
+            <p>
+              💰 <strong>Total Cost:</strong> ₹
+              {(
+                Number(material.quantity) *
+                Number(material.price)
+              ).toLocaleString()}
+            </p>
+
+            <button
+              className="delete-btn"
+              onClick={() =>
+                deleteMaterial(material._id)
+              }
+            >
+              Delete Material
+            </button>
+
+          </div>
+
+        ))
+
+    )}
+
+  </div>
+);
 }
 
 const inputStyle = {

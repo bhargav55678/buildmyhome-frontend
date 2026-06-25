@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import API from "../services/api";
+import "./Reports.css";
 
 function Reports() {
   const [projectCount, setProjectCount] = useState(0);
@@ -49,50 +50,81 @@ function Reports() {
     doc.save("BuildMyHome_Report.pdf");
   };
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
-      <h1>📄 Reports</h1>
+ return (
+  <div className="reports-page">
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "700px",
-          marginTop: "20px",
-        }}
-      >
-        <h2>BuildMyHome Summary</h2>
+    <div className="reports-header">
+      <h1>📄 Reports Center</h1>
 
-        <p>📁 Projects: {projectCount}</p>
-        <p>🧱 Materials: {materialCount}</p>
-        <p>👷 Providers: {providerCount}</p>
-        <p>📸 Images: {imageCount}</p>
-
-        <button
-          onClick={generatePDF}
-          style={{
-            marginTop: "15px",
-            padding: "12px 20px",
-            background: "#22c55e",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
-        >
-          Download PDF Report
-        </button>
-      </div>
+      <p>
+        Generate &
+        <span> Download Project Reports</span>
+      </p>
     </div>
-  );
+
+    <div className="report-cards">
+
+      <div className="report-card">
+        <h3>📁 Projects</h3>
+        <h2>{projectCount}</h2>
+      </div>
+
+      <div className="report-card">
+        <h3>🧱 Materials</h3>
+        <h2>{materialCount}</h2>
+      </div>
+
+      <div className="report-card">
+        <h3>👷 Providers</h3>
+        <h2>{providerCount}</h2>
+      </div>
+
+      <div className="report-card">
+        <h3>📸 Images</h3>
+        <h2>{imageCount}</h2>
+      </div>
+
+    </div>
+
+    <div className="report-box">
+
+      <h2>📊 BuildMyHome Summary</h2>
+
+      <div className="report-list">
+
+        <div className="report-item">
+          <span>Total Projects</span>
+          <strong>{projectCount}</strong>
+        </div>
+
+        <div className="report-item">
+          <span>Total Materials</span>
+          <strong>{materialCount}</strong>
+        </div>
+
+        <div className="report-item">
+          <span>Total Providers</span>
+          <strong>{providerCount}</strong>
+        </div>
+
+        <div className="report-item">
+          <span>Total Images</span>
+          <strong>{imageCount}</strong>
+        </div>
+
+      </div>
+
+      <button
+        className="download-btn"
+        onClick={generatePDF}
+      >
+        📄 Download PDF Report
+      </button>
+
+    </div>
+
+  </div>
+);
 }
 
 export default Reports;

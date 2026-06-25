@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Reviews.css";
 
 function Reviews() {
   const [providers, setProviders] = useState([]);
@@ -83,101 +84,125 @@ function Reviews() {
     }
   };
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
+ return (
+  <div className="reviews-page">
+
+    <div className="reviews-header">
       <h1>⭐ Reviews & Ratings</h1>
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "700px",
-        }}
-      >
-        <h2>Add Review</h2>
-
-        <select
-          value={providerId}
-          onChange={(e) => setProviderId(e.target.value)}
-          style={inputStyle}
-        >
-          {providers.map((provider) => (
-            <option key={provider._id} value={provider._id}>
-              {provider.name} - {provider.profession}
-            </option>
-          ))}
-        </select>
-
-        <input
-          type="number"
-          min="1"
-          max="5"
-          placeholder="Rating (1-5)"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          style={inputStyle}
-        />
-
-        <textarea
-          placeholder="Write Review"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          style={{
-            ...inputStyle,
-            height: "100px",
-          }}
-        />
-
-        <button
-          onClick={addReview}
-          style={buttonStyle}
-        >
-          Add Review
-        </button>
-      </div>
-
-      <div style={{ marginTop: "30px" }}>
-        <h2>📋 Reviews</h2>
-
-        {reviews.length === 0 ? (
-          <div
-            style={{
-              background: "#1e293b",
-              padding: "20px",
-              borderRadius: "12px",
-              marginTop: "15px",
-            }}
-          >
-            No Reviews Yet
-          </div>
-        ) : (
-          reviews.map((review) => (
-            <div
-              key={review._id}
-              style={{
-                background: "#1e293b",
-                padding: "20px",
-                borderRadius: "12px",
-                marginTop: "15px",
-              }}
-            >
-              <h3>⭐ {review.rating}/5</h3>
-
-              <p>{review.comment}</p>
-            </div>
-          ))
-        )}
-      </div>
+      <p>
+        Rate Service Providers &
+        <span> Share Your Experience</span>
+      </p>
     </div>
-  );
+
+    <div className="review-form">
+
+      <h2>Add Review</h2>
+
+      <select
+        value={providerId}
+        onChange={(e) => setProviderId(e.target.value)}
+      >
+        {providers.map((provider) => (
+          <option
+            key={provider._id}
+            value={provider._id}
+          >
+            {provider.name} - {provider.profession}
+          </option>
+        ))}
+      </select>
+
+      <input
+        type="number"
+        min="1"
+        max="5"
+        placeholder="Rating (1-5)"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
+      />
+
+      <textarea
+        placeholder="Write your review..."
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
+
+      <button
+        className="add-btn"
+        onClick={addReview}
+      >
+        + Add Review
+      </button>
+
+    </div>
+
+    <div className="stats">
+
+      <div className="stat-card">
+        <h3>⭐ Total Reviews</h3>
+        <h2>{reviews.length}</h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>👷 Providers</h3>
+        <h2>{providers.length}</h2>
+      </div>
+
+      <div className="stat-card">
+        <h3>🌟 Average Rating</h3>
+
+        <h2>
+          {reviews.length
+            ? (
+                reviews.reduce(
+                  (sum, r) => sum + Number(r.rating),
+                  0
+                ) / reviews.length
+              ).toFixed(1)
+            : "0.0"}
+        </h2>
+
+      </div>
+
+    </div>
+
+    <h2 style={{ marginBottom: "20px" }}>
+      📋 Reviews
+    </h2>
+
+    {reviews.length === 0 ? (
+
+      <div className="review-card">
+        No Reviews Yet
+      </div>
+
+    ) : (
+
+      reviews.map((review) => (
+
+        <div
+          key={review._id}
+          className="review-card"
+        >
+
+          <h3>
+            ⭐ {review.rating}/5
+          </h3>
+
+          <p>
+            {review.comment}
+          </p>
+
+        </div>
+
+      ))
+
+    )}
+
+  </div>
+);
 }
 
 const inputStyle = {
