@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Budget.css";
 
 function Budget() {
  const [totalBudget, setTotalBudget] = useState(0);
@@ -52,62 +53,91 @@ const usage =
     ? Math.round((totalSpent / totalBudget) * 100)
     : 0;
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
-      <h1>💰 Budget Tracking</h1>
+ return (
+  <div className="budget-page">
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "700px",
-          marginTop: "20px",
-        }}
-      >
-<h2>💰 Total Budget: ₹{totalBudget}</h2>
+    <div className="budget-header">
+      <h1>💰 Budget Management</h1>
+      <p>
+        Track Project Expenses &
+        <span> Budget Utilization</span>
+      </p>
+    </div>
 
-<h2>🧱 Material Expenses: ₹{totalSpent}</h2>
+    <div className="budget-cards">
 
-<h2>💵 Remaining Budget: ₹{remaining}</h2>
+      <div className="budget-card">
+        <h3>💰 Total Budget</h3>
+        <h2>₹{totalBudget.toLocaleString()}</h2>
+      </div>
 
-<h2>📊 Usage: {usage}%</h2>
+      <div className="budget-card">
+        <h3>🧱 Material Expenses</h3>
+        <h2>₹{totalSpent.toLocaleString()}</h2>
+      </div>
 
-        <h2>💵 Remaining: ₹{remaining}</h2>
+      <div className="budget-card">
+        <h3>💵 Remaining Budget</h3>
+        <h2>₹{remaining.toLocaleString()}</h2>
+      </div>
 
-        <h2>📊 Usage: {usage}%</h2>
+      <div className="budget-card">
+        <h3>📊 Budget Used</h3>
+        <h2>{usage}%</h2>
+      </div>
+
+    </div>
+
+    <div className="analytics-card">
+
+      <h2>📈 Budget Analytics</h2>
+
+      <div className="progress-info">
+
+        <span>Budget Utilization</span>
+
+        <span>{usage}%</span>
+
+      </div>
+
+      <div className="progress-bar">
 
         <div
+          className="progress-fill"
           style={{
-            width: "100%",
-            height: "15px",
-            background: "#334155",
-            borderRadius: "20px",
-            overflow: "hidden",
-            marginTop: "15px",
+            width: `${usage}%`,
+            background:
+              usage >= 80
+                ? "#ef4444"
+                : "#22c55e",
           }}
-        >
-          <div
-            style={{
-              width: `${usage}%`,
-              height: "100%",
-              background:
-                usage >= 80
-                  ? "#ef4444"
-                  : "#22c55e",
-            }}
-          ></div>
-        </div>
+        ></div>
+
       </div>
+
+      <div className="summary">
+
+        <div>
+          <h4>Total Budget</h4>
+          <p>₹{totalBudget.toLocaleString()}</p>
+        </div>
+
+        <div>
+          <h4>Total Expenses</h4>
+          <p>₹{totalSpent.toLocaleString()}</p>
+        </div>
+
+        <div>
+          <h4>Remaining</h4>
+          <p>₹{remaining.toLocaleString()}</p>
+        </div>
+
+      </div>
+
     </div>
-  );
+
+  </div>
+);
 }
 
 const inputStyle = {
