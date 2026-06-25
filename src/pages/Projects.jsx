@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Projects.css";
 
 function Projects() {
   const [projectName, setProjectName] = useState("");
@@ -169,35 +170,31 @@ function Projects() {
   }
 };
 
-  return (
-  
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0f172a",
-        color: "white",
-        padding: "30px",
-      }}
-    >
-      <h1>📁 Projects</h1>
+ return (
+  <div className="projects-page">
 
-      <div
-        style={{
-          background: "#1e293b",
-          padding: "25px",
-          borderRadius: "15px",
-          maxWidth: "600px",
-          marginTop: "20px",
-        }}
-      >
-        <h2>Create Project</h2>
+    {/* Header */}
+    <div className="projects-header">
+      <h1>🏗️ Project Management</h1>
+
+      <p>
+        Create, Track & Manage
+        <span> Construction Projects</span>
+      </p>
+    </div>
+
+    {/* Create Project Form */}
+    <div className="project-form">
+
+      <h2>Create New Project</h2>
+
+      <div className="form-grid">
 
         <input
           type="text"
           placeholder="Project Name"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -205,7 +202,6 @@ function Projects() {
           placeholder="Location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          style={inputStyle}
         />
 
         <input
@@ -213,44 +209,47 @@ function Projects() {
           placeholder="Budget"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
-          style={inputStyle}
+        />
+
+        <input
+          type="text"
+          placeholder="Planning"
+          readOnly
         />
 
         <textarea
-          placeholder="Description"
+          className="full-width"
+          placeholder="Project Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          style={{
-            ...inputStyle,
-            height: "100px",
-          }}
         />
 
-        <button
-          style={buttonStyle}
-          onClick={createProject}
-        >
-          Create Project
-        </button>
       </div>
 
-      <div style={{ marginTop: "40px" }}>
-       
-       <input
-  type="text"
-  placeholder="🔍 Search Projects..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  style={{
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "none",
-    marginBottom: "20px",
-  }}
-/>
-       
-        <h2>📋 My Projects</h2>
+      <button
+        className="create-btn"
+        onClick={createProject}
+      >
+        + Create Project
+      </button>
+
+    </div>
+
+    {/* Search */}
+    <div className="search-box">
+
+      <input
+        type="text"
+        placeholder="🔍 Search Projects..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+    </div>
+
+    <h2 className="projects-title">
+      📁 My Projects
+    </h2>
 
         {projects.length === 0 ? (
           <div
@@ -366,11 +365,10 @@ function Projects() {
                 Update Progress
               </button>
             </div>
-          ))
+              ))
         )}
-      </div>
-    </div>
-  );
+  </div>
+);
 }
 
 const inputStyle = {
